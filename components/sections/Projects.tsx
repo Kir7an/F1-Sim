@@ -55,6 +55,18 @@ const projects = [
     link: '/solar',
   },
   {
+    id: 'hvdc',
+    badge: 'Live Simulation · Power Systems',
+    title: 'HVDC Breaker Controller',
+    description: 'Raspberry Pi-based HVDC circuit breaker protection system with real-time overcurrent (50/51), dV/dt ROCOV, and directional (67) relay logic. Live waveform monitoring via ADS1115 ADC, GPIO breaker trip/close control, and IEC 61850 fault logging.',
+    tags: ['Raspberry Pi', 'Python', 'GPIO', 'HVDC', 'Protection Relay', 'ADS1115'],
+    image: '/images/hvdc.jpg',
+    accent: '#06B6D4',
+    featured: true,
+    group: 'energy',
+    link: '/hvdc',
+  },
+  {
     id: 'uwild',
     badge: 'IUK · Canada Ocean Super Cluster',
     title: 'Amphibian UWILD',

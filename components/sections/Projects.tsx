@@ -15,7 +15,44 @@ const projects = [
     image: '/images/digital-twin.png',
     accent: '#E8002D',
     featured: true,
+    group: 'hero',
     link: '/f1',
+  },
+  {
+    id: 'grid',
+    badge: 'Live Simulation · Energy Systems',
+    title: 'Grid Commander',
+    description: 'Professional microgrid energy management dashboard with live power flow animation, solar/battery/load balancing simulation, SCADA-style fault injection, and 24-hour analytics — directly from BEng thesis research.',
+    tags: ['Next.js 15', 'SVG Animation', 'TypeScript', 'SCADA', 'Energy Systems'],
+    image: '/images/digital-twin.png',
+    accent: '#00D084',
+    featured: true,
+    group: 'energy',
+    link: '/grid',
+  },
+  {
+    id: 'bms',
+    badge: 'Live Simulation · Electrical Engineering',
+    title: 'BMS Lab',
+    description: 'Battery management system dashboard with 24-cell live pack visualisation, thermal heatmapping, degradation modelling across 2000 cycles, and state-of-health prediction for lithium-ion battery systems.',
+    tags: ['Next.js 15', 'SVG', 'TypeScript', 'Electrochemistry', 'BMS'],
+    image: '/images/pcb.png',
+    accent: '#3B82F6',
+    featured: true,
+    group: 'energy',
+    link: '/bms',
+  },
+  {
+    id: 'solarapp',
+    badge: 'Live Simulation · Solar Engineering',
+    title: 'Solar Command',
+    description: 'Dual-axis solar tracking platform with real-time sun position computation, animated sky-dome path diagram, energy yield comparison across global locations, and temperature derate performance analysis.',
+    tags: ['Next.js 15', 'SVG', 'TypeScript', 'Solar Engineering', 'Photovoltaics'],
+    image: '/images/pcb.png',
+    accent: '#F59E0B',
+    featured: true,
+    group: 'energy',
+    link: '/solar',
   },
   {
     id: 'uwild',
@@ -26,6 +63,7 @@ const projects = [
     image: '/images/robot-arm.png',
     accent: '#e7c59a',
     featured: true,
+    group: 'main',
   },
   {
     id: 'twin',
@@ -36,6 +74,7 @@ const projects = [
     image: '/images/digital-twin.png',
     accent: '#6b9fd4',
     featured: true,
+    group: 'main',
   },
   {
     id: 'solar',
@@ -46,6 +85,7 @@ const projects = [
     image: '/images/pcb.png',
     accent: '#f0c060',
     featured: false,
+    group: 'rest',
   },
   {
     id: 'irad',
@@ -56,12 +96,13 @@ const projects = [
     image: '/images/robot-arm.png',
     accent: '#8b7cf6',
     featured: false,
+    group: 'rest',
   },
 ];
 
 type Project = {
   id: string; badge: string; title: string; description: string;
-  tags: string[]; image: string; accent: string; featured: boolean; link?: string;
+  tags: string[]; image: string; accent: string; featured: boolean; group: string; link?: string;
 };
 
 function FeaturedCardInner({ p }: { p: Project }) {
@@ -146,9 +187,10 @@ export function Projects() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
-  const heroProject = projects.find(p => p.id === 'f1')!;
-  const featured = projects.filter((p) => p.featured && p.id !== 'f1');
-  const rest     = projects.filter((p) => !p.featured);
+  const heroProject = projects.find(p => p.group === 'hero')!;
+  const energyProjects = projects.filter(p => p.group === 'energy');
+  const mainFeatured  = projects.filter(p => p.group === 'main');
+  const rest          = projects.filter(p => p.group === 'rest');
 
   return (
     <section id="work" ref={ref} className="py-32 px-6">
@@ -185,14 +227,46 @@ export function Projects() {
           </motion.div>
         </motion.div>
 
-        {/* Featured — 2-col large cards */}
+        {/* Energy / Electrical — 3-col live dashboard projects */}
+        <motion.div className="mb-3">
+          <motion.p
+            initial={{ opacity: 0, x: -16 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.25 }}
+            className="font-mono text-[9px] tracking-widest uppercase text-[#444] mb-4"
+          >
+            Energy &amp; Electrical Systems
+          </motion.p>
+        </motion.div>
         <motion.div
           initial="hidden"
           animate={inView ? 'show' : 'hidden'}
-          variants={{ show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } } }}
+          variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } } }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
+        >
+          {energyProjects.map((p) => (
+            <motion.div key={p.id} variants={fadeUp}>
+              <TiltCard className="h-full">
+                {p.link ? (
+                  <Link href={p.link} className="block h-full">
+                    <FeaturedCardInner p={p} />
+                  </Link>
+                ) : (
+                  <FeaturedCardInner p={p} />
+                )}
+              </TiltCard>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Main featured — 2-col */}
+        <motion.div
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={{ show: { transition: { staggerChildren: 0.15, delayChildren: 0.15 } } }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"
         >
-          {featured.map((p) => (
+          {mainFeatured.map((p) => (
             <motion.div key={p.id} variants={fadeUp}>
               <TiltCard className="h-full">
                 {p.link ? (

@@ -67,6 +67,42 @@ const projects = [
     link: '/hvdc',
   },
   {
+    id: 'fraud',
+    badge: 'Live Demo · Fintech AI',
+    title: 'Fraud Sentinel',
+    description: 'Real-time AI fraud detection dashboard — Isolation Forest + XGBoost ensemble scoring transactions per second, live anomaly feed with risk scoring, ROC curve (AUC 0.974), SHAP feature explainability, and a one-click fraud burst simulator.',
+    tags: ['XGBoost', 'Isolation Forest', 'SHAP', 'Fintech', 'TypeScript'],
+    image: '/images/fraud.jpg',
+    accent: '#EF4444',
+    featured: true,
+    group: 'ai',
+    link: '/fraud',
+  },
+  {
+    id: 'trading',
+    badge: 'Live Sim · Quantitative Finance',
+    title: 'Alpha Engine',
+    description: 'ML-driven algorithmic trading backtester — momentum + mean-reversion signal layer on 200-bar synthetic price data, animated equity curve, Sharpe/Sortino/drawdown analytics, buy/sell signal markers, and monthly returns heatmap.',
+    tags: ['ML Signals', 'Backtesting', 'Quant Finance', 'TypeScript', 'SVG Charts'],
+    image: '/images/trading.jpg',
+    accent: '#22C55E',
+    featured: true,
+    group: 'ai',
+    link: '/trading',
+  },
+  {
+    id: 'optimizer',
+    badge: 'Live Sim · Portfolio Management',
+    title: 'Quant Lens',
+    description: 'Markowitz mean-variance portfolio optimiser — interactive risk slider rebalances 6-asset allocation in real time, efficient frontier curve with max-Sharpe highlight, asset correlation heatmap, and animated donut chart.',
+    tags: ['Markowitz', 'Mean-Variance', 'Efficient Frontier', 'TypeScript', 'Quant'],
+    image: '/images/optimizer.jpg',
+    accent: '#8B5CF6',
+    featured: true,
+    group: 'ai',
+    link: '/optimizer',
+  },
+  {
     id: 'uwild',
     badge: 'IUK · Canada Ocean Super Cluster',
     title: 'Amphibian UWILD',
@@ -201,6 +237,7 @@ export function Projects() {
 
   const heroProject = projects.find(p => p.group === 'hero')!;
   const energyProjects = projects.filter(p => p.group === 'energy');
+  const aiProjects     = projects.filter(p => p.group === 'ai');
   const mainFeatured  = projects.filter(p => p.group === 'main');
   const rest          = projects.filter(p => p.group === 'rest');
 
@@ -220,7 +257,7 @@ export function Projects() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="font-heading font-bold text-3xl md:text-5xl text-frost mb-16 max-w-2xl leading-tight"
         >
-          Selected work spanning robotics, energy systems, and intelligent automation.
+          Selected work spanning robotics, energy systems, AI, and intelligent automation.
         </motion.h2>
 
         {/* Hero F1 project — full width */}
@@ -257,6 +294,38 @@ export function Projects() {
           className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
         >
           {energyProjects.map((p) => (
+            <motion.div key={p.id} variants={fadeUp}>
+              <TiltCard className="h-full">
+                {p.link ? (
+                  <Link href={p.link} className="block h-full">
+                    <FeaturedCardInner p={p} />
+                  </Link>
+                ) : (
+                  <FeaturedCardInner p={p} />
+                )}
+              </TiltCard>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* AI & ML — 3-col */}
+        <motion.div className="mb-3">
+          <motion.p
+            initial={{ opacity: 0, x: -16 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: 0.3 }}
+            className="font-mono text-[9px] tracking-widest uppercase text-[#444] mb-4"
+          >
+            AI &amp; Machine Learning
+          </motion.p>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate={inView ? 'show' : 'hidden'}
+          variants={{ show: { transition: { staggerChildren: 0.1, delayChildren: 0.25 } } }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
+        >
+          {aiProjects.map((p) => (
             <motion.div key={p.id} variants={fadeUp}>
               <TiltCard className="h-full">
                 {p.link ? (

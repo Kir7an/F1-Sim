@@ -6,14 +6,16 @@ import { LineStatusTab } from '@/components/hvdc/LineStatusTab';
 import { WaveformsTab } from '@/components/hvdc/WaveformsTab';
 import { ProtectionTab } from '@/components/hvdc/ProtectionTab';
 import { FaultLogTab } from '@/components/hvdc/FaultLogTab';
+import { SchematicTab } from '@/components/hvdc/SchematicTab';
 
-type Tab = 'line' | 'waveforms' | 'protection' | 'faultlog';
+type Tab = 'line' | 'waveforms' | 'protection' | 'faultlog' | 'schematic';
 
 const TABS: { id: Tab; label: string; badge?: string }[] = [
   { id: 'line',       label: 'Line Status',  badge: 'LIVE' },
   { id: 'waveforms',  label: 'Waveforms',    badge: 'LIVE' },
   { id: 'protection', label: 'Protection' },
   { id: 'faultlog',   label: 'Fault Log' },
+  { id: 'schematic',  label: 'Schematic',    badge: 'IEC' },
 ];
 
 const ACCENT = '#06B6D4';
@@ -90,6 +92,11 @@ export default function HVDCPage() {
             {activeTab === 'faultlog' && (
               <motion.div key="faultlog" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
                 <FaultLogTab />
+              </motion.div>
+            )}
+            {activeTab === 'schematic' && (
+              <motion.div key="schematic" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
+                <SchematicTab />
               </motion.div>
             )}
           </AnimatePresence>
